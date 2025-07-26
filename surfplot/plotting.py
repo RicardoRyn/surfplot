@@ -289,6 +289,7 @@ class Plot(object):
         backdrop *= brightness
         self.add_layer(backdrop, 'Greys_r', color_range=(0, 1), cbar=False)
 
+
     def add_layer(self, data, cmap='viridis', alpha=1, color_range=None,
                   as_outline=False, zero_transparent=True, cbar=True, 
                   cbar_label=None):
@@ -399,7 +400,7 @@ class Plot(object):
         self._show_cbar.append(cbar)
         self.cbar_labels.append(cbar_label)
 
-    def render(self, offscreen=True):
+    def render(self, offscreen=True, try_qt=False):
         """Generate surface plot with all provided layers
 
         Parameters
@@ -441,7 +442,8 @@ class Plot(object):
                          background=self.background, zoom=self.zoom,
                          nan_color=(0, 0, 0, 0), share=False,
                          label_text=self.label_text, size=self.size, 
-                         return_plotter=True, offscreen=offscreen)
+                         return_plotter=True, offscreen=offscreen, 
+                         try_qt=try_qt)
 
     def _add_colorbars(self, location='bottom', label_direction=None,   
                        n_ticks=3, decimals=2, fontsize=10, draw_border=True, 
@@ -590,7 +592,7 @@ class Plot(object):
         return fig
 
     def show(self, embed_nb=False, interactive=True, transparent_bg=True, 
-             scale=(1, 1)):
+             scale=(1, 1), try_qt=True):
         """View Brainspace vtk surface rendering
 
         Notes
@@ -615,5 +617,5 @@ class Plot(object):
         Ipython Image or vtk panel
             Brainspace surface plot rendering
         """
-        p = self.render(offscreen=False)
+        p = self.render(offscreen=False, try_qt=try_qt)
         return p.show(embed_nb, interactive, scale=scale)

@@ -102,7 +102,7 @@ def _set_table(cm, lut):
 def build_plotter(surfs, layout, array_name=None, view=None, color_bar=None,
                   color_range=None, share=False, label_text=None,
                   cmap='viridis', nan_color=(0, 0, 0, 1), zoom=1,
-                  background=(1, 1, 1), size=(400, 400), **kwargs):
+                  background=(1, 1, 1), size=(400, 400), try_qt=False, **kwargs):
     """Build plotter arranged according to the `layout`.
 
     Parameters
@@ -241,7 +241,7 @@ def build_plotter(surfs, layout, array_name=None, view=None, color_bar=None,
         _gen_grid(nrow, ncol, label_text, color_bar, share)
 
     kwargs.update({'nrow': grid_row, 'ncol': grid_col, 'size': size})
-    p = Plotter(**kwargs)
+    p = Plotter(try_qt=try_qt, **kwargs)
 
     for iren, jren in iter_prod(range(len(ridx)), range(len(cidx))):
         i, j = ridx[iren], cidx[jren]
@@ -344,7 +344,7 @@ def plot_surf(surfs, layout, array_name=None, view=None, color_bar=None,
               nan_color=(0, 0, 0, 1), zoom=1, background=(1, 1, 1),
               size=(400, 400), embed_nb=False, interactive=True, scale=(1, 1),
               transparent_bg=True, screenshot=False, filename=None,
-              return_plotter=False, **kwargs):
+              return_plotter=False, try_qt=False, **kwargs):
 
     """Plot surfaces arranged according to the `layout`.
 
@@ -446,7 +446,7 @@ def plot_surf(surfs, layout, array_name=None, view=None, color_bar=None,
                       color_bar=color_bar, color_range=color_range,
                       share=share, label_text=label_text, cmap=cmap,
                       nan_color=nan_color, zoom=zoom, background=background,
-                      size=size, **kwargs)
+                      size=size, try_qt=try_qt, **kwargs)
     if return_plotter:
         return p
     if screenshot:
